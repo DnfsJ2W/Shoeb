@@ -1,0 +1,185 @@
+      [HttpGet]
+        [Route("api/GetPlacedOrders")]
+        public List<Order> GetPlacedOrders()
+
+        {
+            List<Order> a = db.Orders.ToList<Order>();
+            return a;
+        }
+
+        //[HttpGet]
+        //[Route("api/GetCart")]
+        //public List<Cart> GetCart()
+
+        //{
+        //    List<Cart> a = db.Carts.ToList<Cart>();
+        //    return a;
+        //}
+
+
+
+        //public List<CartItem> GetCart( CartId)
+        //{
+        //    CartId = GetCartId();
+
+        //    return _db.Cart.Where(
+        //        c => c.CartId ==Cart.CartId).ToList();
+        //}
+
+        [HttpGet]
+        [Route("api/GetCart")]
+        public IEnumerable<Cart> GetCart()
+        {
+            IList<Cart> products = db.Carts.ToList<Cart>();
+            List<Cart> products1 = new List<Cart>();
+            foreach (var p in products)
+            {
+                Cart List = new Cart()
+                {
+                    ProductId = p.ProductId,
+                    UserId = p.UserId,
+                    CartId = p.CartId,
+                    
+                };
+
+                products1.Add(List);
+            }
+            return products1;
+        }
+
+
+
+
+
+        //    db.Configuration.ProxyCreationEnabled = false;
+
+
+        //    List<Order> listview = new List<Order>();
+
+
+
+        //    return new Order()
+        //    {
+        //        Details = from d in Order.Order
+        //                  select new Order.Detail()
+        //                  {
+        //                      ProductID = d.Product.Id,
+        //                      OrderId = d.OrderId,
+        //                      ProductQuantity = d.ProductQuantity
+        //                  }
+        //    };
+        //    foreach (var i in obj)
+        //    {
+        //        //OrderViewModel data = new OrderViewModel() {OrderId=i. }
+
+        //        listview.Add(i);
+        //    }
+        //    // other assignments
+        //    return listview;
+
+
+
+
+
+        //    ////var count = CurrentDbContext.PaymentTypes.Count();
+
+        //}
+        //// GET: api/Orders/5
+        //[ResponseType(typeof(tblOrder))]
+        //public IHttpActionResult GetOrderById(int id)
+        //{
+        //    db.Configuration.ProxyCreationEnabled = false;
+        //    tblOrder tblOrder = db.Orders.Find(id);
+        //    if (tblOrder == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return Ok(tblOrder);
+        //}
+
+        //// PUT: api/Orders/5
+        //[ResponseType(typeof(void))]
+        //public IHttpActionResult PuttblOrder(int id, tblOrder tblOrder)
+        //{
+        //    db.Configuration.ProxyCreationEnabled = false;
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    if (id != tblOrder.OrderId)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    db.Entry(tblOrder).State = EntityState.Modified;
+
+        //    try
+        //    {
+        //        db.SaveChanges();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!tblOrderExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+
+        //    return StatusCode(HttpStatusCode.NoContent);
+        //}
+
+        //// POST: api/Orders
+        //[ResponseType(typeof(tblOrder))]
+        //public IHttpActionResult PosttblOrder(tblOrder tblOrder)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    db.Orders.Add(tblOrder);
+        //    db.SaveChanges();
+
+        //    return CreatedAtRoute("DefaultApi", new { id = tblOrder.OrderId }, tblOrder);
+        //}
+
+        //// DELETE: api/Orders/5
+        //[ResponseType(typeof(tblOrder))]
+        //public IHttpActionResult DeletetblOrder(int id)
+        //{
+        //    db.Configuration.ProxyCreationEnabled = false;
+        //    tblOrder tblOrder = db.Orders.Find(id);
+        //    if (tblOrder == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    db.Orders.Remove(tblOrder);
+        //    db.SaveChanges();
+
+        //    return Ok(tblOrder);
+        //}
+
+
+
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool tblOrderExists(int id)
+        {
+            return db.Orders.Count(e => e.OrderId == id) > 0;
+        }
+    }
